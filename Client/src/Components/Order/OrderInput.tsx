@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Dropdown, Radio } from "../Input/Options"
+import { orderWhatsapp } from "../../API/sendOrder"
 
 export default function OrderInput(){
     return(
@@ -8,48 +9,80 @@ export default function OrderInput(){
         </div>
     )
 }
+interface OrderForm{
+    fname: string,
+    lname: string,
+    phone:number|string,
+    flavor: string,
+    size: number,
+    date: Date,
+    info: string
+}
+const initialFormState:OrderForm = {
+    fname: "",
+    lname: "",
+    phone: "",
+    flavor: 'vanilla',
+    size: 2,
+    date: new Date(),
+    info: ""
+  };
 function OrderForm(){
+    const [formData, setFormData] = useState<OrderForm>(initialFormState);
+    const handleChange = (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+          ...prevState,
+          [name]: value
+        }));
+    };
+    const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        orderWhatsapp(formData);
+    }
+    
+  
     return(
         <>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div className="">
-                    <label>
+                    <label htmlFor="fname">
                         <p>Nombre</p>
                     </label>
-                    <input type="text" required id="name"  name="fname" className="bg-slate-50 border border-black-200 rounded-lg pl-2"/>
+                    <input type="text" placeholder={"John"} value={formData.fname} onChange={handleChange} required id="fname"  name="fname" className="bg-slate-50 border border-black-200 rounded-lg pl-2"/>
                 </div>
                 <div className="">
-                    <label>
+                    <label htmlFor="lname">
                         <p>Apellido</p>
                     </label>
-                    <input type="text" required id="apellido" name="lname" className="bg-slate-50 border border-black-200 rounded-lg pl-2"/>
+                    <input type="text" placeholder="Smith" value={formData.lname} onChange={handleChange} required id="lname" name="lname" className="bg-slate-50 border border-black-200 rounded-lg pl-2"/>
                 </div>
                <div className="">
-                    <label>
+                    <label htmlFor="phone">
                         <p>Numero</p>
                     </label>
-                    <input type="tel" required id="phone" name="phone" className="text-xs py-1 w-32 bg-slate-50 border border-black-200 rounded-lg mr-1 pl-2"/>
+                    <input type="number" onChange={handleChange} placeholder={"6073334444"} value={formData.phone} required id="phone" name="phone" className="text-xs py-1 w-32 bg-slate-50 border border-black-200 rounded-lg mr-1 pl-2"/>
 
                </div>
                <div className="pt-2">
-                    <Dropdown options = {CAKE_OPTIONS} id = {{id:"flavor", name:"Sabores"}}/>
+                    <Dropdown options = {CAKE_OPTIONS} onChange={(e)=>handleChange} id = "flavor"/>
                </div>
                <div className="pt-1">
-                    <Radio options = {SIZE_OPTIONS} id = {{id:"size", name:"Tamaño"}}/>
+                    <Radio options = {SIZE_OPTIONS} onChange={(e)=>handleChange} id = "size"/>
                 </div>
                 <div className="">
-                    <label>
+                    <label htmlFor="date">
                         <p>Fecha de Entrega</p>
                     </label>
-                    <input type="date"  min={new Date().toISOString().split("T")[0]}required id="date" name="date" className="text-xs py-1 w-28 bg-slate-50 border border-black-200 rounded-lg mr-1 mt-px  pl-2"/>
+                    <input type="date" value={formData.date.toString()} onChange={handleChange} min={new Date().toISOString().split("T")[0]}required id="date" name="date" className="text-xs py-1 w-28 bg-slate-50 border border-black-200 rounded-lg mr-1 mt-px  pl-2"/>
                 </div>
                 <div>
-                    <label>
+                    <label htmlFor="info">
                         <p>Informacion Addicional</p>
                     </label>
-                    <textarea  id="info" name="info" className="text-xs py-1 w-full h-14 bg-slate-50 border border-black-200 rounded-lg mr-1 pl-2 align-top"/>
+                    <textarea placeholder = {"Como podemos elevar tu celebracion?"} value={formData.info} id="info" name="info" onChange={handleChange} className="text-xs py-1 w-full h-14 bg-slate-50 border border-black-200 rounded-lg mr-1 pl-2 align-top"/>
                 </div>
-                <input type = "submit" value="Ordenar"  className="bg-pink-500 border-black drop-shadow mt-4 rounded-lg px-1 float-right"/>
+                <input type = "submit" value="Ordenar"  className="bg-pink-500 border-black mt-2 rounded-lg px-1 float-right"/>
             </form>
         </>
     )
@@ -57,15 +90,15 @@ function OrderForm(){
 const CAKE_OPTIONS = [
     {
         label: "Vanilla",
-        value: "van"
+        value: "vanilla"
     },
     {
         label: "Chocolate",
-        value: "choc"
+        value: "chocolate"
     },
     {
         label: "Banano",
-        value: "ban"
+        value: "banano"
     },
     {
         label: "Cafe",
@@ -73,7 +106,7 @@ const CAKE_OPTIONS = [
     },
     {
         label: "Cheese Cake",
-        value: "cheese"
+        value: "cheesecake"
     }
 ]
 const SIZE_OPTIONS = [
