@@ -2,8 +2,8 @@ export default function Home(){
     return(
         <>
             <h1 className="w-full text-center mt-6 text-5xl italic font-serif text-pink-500">Tortas By Andrea</h1>
-            <div className= "mx-auto mt-4 w-1/2 leading-relaxed bg-white rounded-lg">
-                <p className="px-1 py-4">
+            <div className= "mx-auto mt-4 w-1/2 leading-12 bg-white rounded-lg">
+                <p className="px-4 py-4">
                     ¡Bienvenidos a Tortas By Andrea! <br/>
 
                     Somos una pastelería en línea especializada en crear tortas con diseños complejos y únicos. Nuestra fundadora, Andrea, es una pastelera apasionada por la repostería creativa y se dedica a hacer realidad las ideas más originales de nuestros clientes.
