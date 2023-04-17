@@ -22,7 +22,7 @@ export default function Home(){
             <p className="w-full text-center text-lg italic font-serif text-black">
                     Dueña y Creadora : Andrea Mateus <br/>
                     Numero: xxx-xxx-xxxx<br/>
-                    Email: email@gmail.com<br/>
+                    Email: tortasbyandreabucara@gmail.com<br/>
             </p>
         </>
 
