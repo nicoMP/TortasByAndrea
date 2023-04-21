@@ -1,29 +1,32 @@
 import { Component} from "react"
 import { Dropdown, Radio } from "../Input/Options"
-import {sendEmail} from "../../API/sendEmail";
 import { OrderForm } from "../../types";
-export default function OrderInput(){
-    return(
-        <div className= "bg-white mx-auto w-3/4 md:w-1/4 mt-6 rounded-lg overflow-scroll p-8">
-        <RequestForm/>
-        </div>
-    )
-}
+import axios from "axios";
 
-const initialFormState:OrderForm = {
-    fname: "",
-    lname: "",
-    phone: "",
-    email: "",
-    flavor: 'vanilla',
-    size: 2,
-    date: new Date(),
-    info: ""
-  };
+const GRAPHQL_API = "http://localhost:4000/graphql"
+
+
+
 class RequestForm extends Component<{}, OrderForm>{
+    private sendEmail = async (params:any) => {}
+    
     constructor(props:{}){
         super(props);
-        this.state = initialFormState;
+        this.state = FORM_INIT;
+        this.sendEmail = async (params:OrderForm) => {
+            axios.post(GRAPHQL_API,{
+                query:`{sendEmailOrder}`,
+                headers: {
+                    'Content-Type': 'application/json'
+                  }
+            })
+                .then(response => {
+                  console.log( response.data);
+                })
+                .catch(error => {
+                  console.error(error);
+                });
+        }
     }
     private handleChange = (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -34,16 +37,7 @@ class RequestForm extends Component<{}, OrderForm>{
     };
     private handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        sendEmail({
-                        from: 'tortasbyandreabucara@gmail.com',
-                        to: 'nick2000@live.ca',
-                        subject: 'Request by '  + this.state.fname + " " + this.state.lname ,
-                        text: 
-                            "Fecha de Entrega: " + this.state.date.toString() + `\n` +
-                            "Torta de: " + this.state.flavor +"\nTamaño: " + this.state.size.toString() + "lb" +
-                            "\nInformacion Addicional: " + this.state.info +
-                            "\nNumero: " + this.state.phone
-    })
+        this.sendEmail(this.state);
     }
     
   
@@ -135,3 +129,21 @@ const SIZE_OPTIONS = [
         value: 6
     }
 ]
+const FORM_INIT:OrderForm = {
+    fname: "",
+    lname: "",
+    phone: "",
+    email: "",
+    flavor: 'vanilla',
+    size: 2,
+    date: new Date(),
+    info: ""
+  };
+
+export default function OrderInput(){
+    return(
+        <div className= "bg-white mx-auto w-3/4 md:w-1/4 mt-6 rounded-lg overflow-scroll p-8">
+        <RequestForm/>
+        </div>
+    )
+}
