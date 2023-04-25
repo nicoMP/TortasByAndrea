@@ -67,7 +67,7 @@ class RequestForm extends Component<{}, OrderForm>{
                 </div>
                <div className="">
                     <label htmlFor="phone">
-                        <p>Numero</p>
+                        <p>Telephono</p>
                     </label>
                     <input type="number" onChange={this.handleChange} placeholder={"6073334444"} value={this.state.phone} required id="phone" name="phone" className="text-xs py-1 w-32 bg-slate-50 border border-black-200 rounded-lg mr-1 pl-2"/>
 

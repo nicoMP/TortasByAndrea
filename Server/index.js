@@ -36,7 +36,7 @@ const app = express();
 
 // Enable CORS for all origins
 app.use(cors());
-app.use("auth", require("./API/auth"));
+app.use("/auth", require("./API/auth"));
 app.use("/galleria", require("./API/images"));
 app.use(
   "/order",
@@ -49,7 +49,7 @@ app.use(
 );
 
 app.listen(4000, () => {
-  console.log("Running a GraphQL API server at http://localhost:4000/graphql");
+  console.log("Running a GraphQL API server at http://localhost:4000/");
 });
 
 async function mailer(subject, text) {
