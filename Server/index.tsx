@@ -1,47 +1,81 @@
-var express = require("express")
-var { graphqlHTTP } = require("express-graphql")
-var { buildSchema } = require("graphql")
-const cors = require('cors');
+const express = require("express");
+const { graphqlHTTP } = require("express-graphql");
+const { buildSchema } = require("graphql");
+const cors = require("cors");
+const nodemailer = require("nodemailer")
 
 
 // Construct a schema, using GraphQL schema language
-var schema = buildSchema(`
-    type Query {
-    hello: String,
-    sendEmailOrder: String
-    }
-  
-`)
+const schema = buildSchema(`
+  type Query {
+    sendEmailOrder(
+        request:String!
+    ): String
+  }
+`);
 
 // The root provides a resolver function for each API endpoint
-var root = {
-  hello: () => {
-    return "Hello world!"
-  },
-  sendEmailOrder: () =>{
-    return JSON.stringify({
-        from: 'tortasbyandreabucara@gmail.com',
-        to: 'nick2000@live.ca',
-        subject: 'Request by ' ,// + this.state.fname + " " + this.state.lname ,
-        text: "Fecha de Entrega: "// + this.state.date.toString() + `\n` +
-        //                     "Torta de: " + this.state.flavor +"\nTamaño: " + this.state.size.toString() + "lb" +
-        //                     "\nInformacion Addicional: " + this.state.info +
-        //                     "\nNumero: " + this.state.phone +
-        //                     "\nEmail: " + this.state.email
-                                
-    })
-  }
-}
+const root = {
 
-var app = express()
-app.use(cors)
+  sendEmailOrder: (args) => {
+    let state =  JSON.parse(args.request);
+    let email = {
+      subject: "Request by " + state.fname + " " + state.lname ,
+      text: "Fecha de Entrega: " + new Date(state.date).toString() + `\n` +
+      "Torta de: " + state.flavor +"\nTamaño: " + state.size.toString() + "lb" +
+      "\nInformacion Addicional: " + state.info + "\nNumero: " + state.phone +
+      "\nEmail: " + state.email
+    };
+    mailer(email.subject, email.text).catch(e=>console.log(e));
+    return "HELLO";
+
+  },
+};
+
+const app = express();
+
+// Enable CORS for all origins
+app.use(cors());
+
 app.use(
   "/graphql",
   graphqlHTTP({
     schema: schema,
     rootValue: root,
     graphiql: true,
+    variables: true
   })
-)
-app.listen(4000)
-console.log("Running a GraphQL API server at http://localhost:4000/graphql")
+);
+
+app.listen(4000, () => {
+  console.log("Running a GraphQL API server at http://localhost:4000/graphql");
+});
+
+async function mailer(subject, text) {
+  // Generate test SMTP service account from ethereal.email
+  // Only needed if you don't have a real mail account for testing
+
+  // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: "tortasbyandreabucara@gmail.com", // generated ethereal user
+      pass: "ynhebwzbgverrdhw", // generated ethereal password
+    },
+  });
+
+  // send mail with defined transport object
+  let info = await transporter.sendMail({
+    
+    from: "tortasbyandreabucara@gmail.com",
+    to: "nick2000@live.ca", // list of receivers
+    subject: subject, // Subject line
+    text: text, // plain text body
+  });
+
+  console.log("Message sent: %s", info.messageId);
+  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+}

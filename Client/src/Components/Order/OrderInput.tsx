@@ -2,31 +2,34 @@ import { Component} from "react"
 import { Dropdown, Radio } from "../Input/Options"
 import { OrderForm } from "../../types";
 import axios from "axios";
-
-const GRAPHQL_API = "http://localhost:4000/graphql"
-
-
+const emailOrderMutation = `query SendEmailOrder($params: String!) {
+    sendEmailOrder(request: $params)
+  }`;  
+const GRAPHQL_API = "http://localhost:4000/graphql";
 
 class RequestForm extends Component<{}, OrderForm>{
-    private sendEmail = async (params:any) => {}
+    private sendEmail = async () => {
+        let request = JSON.stringify(this.state);
+        axios.post(GRAPHQL_API, 
+            {query : emailOrderMutation,
+            variables: {params : request}},
+           { headers: {
+                'Content-Type': 'application/json',
+                Accept: "application/json"
+                }}
+        )
+            .then(response => {
+                console.log((response.data.data));
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
     
     constructor(props:{}){
         super(props);
         this.state = FORM_INIT;
-        this.sendEmail = async (params:OrderForm) => {
-            axios.post(GRAPHQL_API,{
-                query:`{sendEmailOrder}`,
-                headers: {
-                    'Content-Type': 'application/json'
-                  }
-            })
-                .then(response => {
-                  console.log( response.data);
-                })
-                .catch(error => {
-                  console.error(error);
-                });
-        }
+        
     }
     private handleChange = (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -37,7 +40,7 @@ class RequestForm extends Component<{}, OrderForm>{
     };
     private handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        this.sendEmail(this.state);
+        this.sendEmail();
     }
     
   
