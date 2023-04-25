@@ -36,9 +36,10 @@ const app = express();
 
 // Enable CORS for all origins
 app.use(cors());
-
+app.use("auth", require("./API/auth"));
+app.use("/galleria", require("./API/images"));
 app.use(
-  "/graphql",
+  "/order",
   graphqlHTTP({
     schema: schema,
     rootValue: root,

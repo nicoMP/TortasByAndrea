@@ -5,7 +5,7 @@ import axios from "axios";
 const emailOrderMutation = `query SendEmailOrder($params: String!) {
     sendEmailOrder(request: $params)
   }`;  
-const GRAPHQL_API = "http://localhost:4000/graphql";
+const GRAPHQL_API = "http://localhost:4000/order";
 
 class RequestForm extends Component<{}, OrderForm>{
     private sendEmail = async () => {

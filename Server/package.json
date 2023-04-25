@@ -2,7 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "description": "Server for Tortas By Andrea",
-  "main": "index.tsx",
+  "main": "index.js",
   "author": "Nicolas Mateus",
   "license": "MIT",
   "dependencies": {
