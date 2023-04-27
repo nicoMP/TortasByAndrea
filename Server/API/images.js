@@ -5,8 +5,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     try {
       res.json({
-        id: "req.user.i",
-        isInstructor: "req.user.isinstructor"
+        images: "sent!"
       });
     } catch (err) {
       console.error(err);

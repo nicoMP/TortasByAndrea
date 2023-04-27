@@ -8,9 +8,18 @@ const nodemailer = require("nodemailer")
 // Construct a schema, using GraphQL schema language
 const schema = buildSchema(`
   type Query {
+    login(
+      username:String!
+      password:String!
+    ) : User
     sendEmailOrder(
         request:String!
     ): String
+  }
+  type User {
+    userid:ID!
+    username:String!
+    accesslevel:Int!
   }
 `);
 
@@ -27,9 +36,12 @@ const root = {
       "\nEmail: " + state.email
     };
     mailer(email.subject, email.text).catch(e=>console.log(e));
-    return "HELLO";
-
+    return `Request Sent Contact `+ state.phone
   },
+  login: (args) =>{
+    console.log((args));
+    return {userid:"123244", username:"juN", password:"password" ,accesslevel:1};
+  }
 };
 
 const app = express();
@@ -39,7 +51,7 @@ app.use(cors());
 app.use("/auth", require("./API/auth"));
 app.use("/galleria", require("./API/images"));
 app.use(
-  "/order",
+  "/",
   graphqlHTTP({
     schema: schema,
     rootValue: root,

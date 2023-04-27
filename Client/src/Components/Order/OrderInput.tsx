@@ -2,16 +2,16 @@ import { Component} from "react"
 import { Dropdown, Radio } from "../Input/Options"
 import { OrderForm } from "../../types";
 import axios from "axios";
-const emailOrderMutation = `query SendEmailOrder($params: String!) {
+const emailOrderQuery = `query SendEmailOrder($params: String!) {
     sendEmailOrder(request: $params)
   }`;  
-const GRAPHQL_API = "http://localhost:4000/order";
+const GRAPHQL_API = "http://localhost:4000/";
 
 class RequestForm extends Component<{}, OrderForm>{
     private sendEmail = async () => {
         let request = JSON.stringify(this.state);
         axios.post(GRAPHQL_API, 
-            {query : emailOrderMutation,
+            {query : emailOrderQuery,
             variables: {params : request}},
            { headers: {
                 'Content-Type': 'application/json',
@@ -39,13 +39,12 @@ class RequestForm extends Component<{}, OrderForm>{
         }));
     };
     private handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
         this.sendEmail();
     }
     
   
     render(){
-        return<>
+        return(
             <form onSubmit={this.handleSubmit}>
                 <div className="">
                     <label htmlFor="fname">
@@ -90,10 +89,10 @@ class RequestForm extends Component<{}, OrderForm>{
                     </label>
                     <textarea placeholder = {"Como podemos elevar tu celebracion?"} value={this.state.info} id="info" name="info" onChange={this.handleChange} className="text-xs py-1 w-full h-14 bg-slate-50 border border-black-200 rounded-lg mr-1 pl-2 align-top"/>
                 </div>
-                <input type = "submit" value="Ordenar"  className="bg-pink-500 border-black mt-2 rounded-lg px-1 float-right"/>
+                <input type = "submit" value="Ordenar"  className="bg-pink-500 border-black mt-2 rounded-lg px-1 active:bg-pink-400 float-right"/>
             </form>
-        </>
-        }
+        )
+    }
     
 }
 const CAKE_OPTIONS = [

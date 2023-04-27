@@ -18,7 +18,7 @@ router.get('/', auth, async (req, res) => {
   }
 });
 //Login Route
-router.post('/', async (req, res) => {
+router.post('/',async (req, res) => {
   const { username, password } = req.body;
 
   try{
