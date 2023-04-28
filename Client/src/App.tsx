@@ -3,8 +3,9 @@ import { Route, Routes, Link } from "react-router-dom";
 import Home from "./Pages/Home";
 import Order from "./Pages/Order";
 import Imagenes from "./Pages/Imagenes";
-import Login from "./Pages/Login"
+import Login from "./Pages/Auth"
 import { useState } from "react";
+import AddUser from "./Pages/AddUser";
 
 function App() {
   const [loginModal,setLoginVis] = useState(false);
@@ -27,9 +28,10 @@ function App() {
       </div>
       <div className="bg-zinc-300 h-screen w-screen absolute overflow-scroll">
         <Routes>
-          <Route path ="/" element={<Home/>}></Route>
-          <Route path ="/ordenar" element={<Order/>}></Route>
-          <Route path ="/galleria" element={<Imagenes/>}></Route>
+          <Route path ="/" element={<Home/>}/>
+          <Route path ="/ordenar" element={<Order/>}/>
+          <Route path ="/galleria" element={<Imagenes/>}/>
+          <Route path = "/agregar-usuario" element ={<AddUser/>}/>
         </Routes>
         {loginModal && <Login closeLogin={()=>setLoginVis(false)}/>}
       </div>
