@@ -1,4 +1,4 @@
-import Login from "./Auth";
+import Login from "../Modules/Auth";
 
 export default function Home(){
     return(

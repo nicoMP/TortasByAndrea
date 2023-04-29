@@ -3,27 +3,29 @@ import { Route, Routes, Link } from "react-router-dom";
 import Home from "./Pages/Home";
 import Order from "./Pages/Order";
 import Imagenes from "./Pages/Imagenes";
-import Login from "./Pages/Auth"
+import Auth from "./Modules/Auth"
 import { useState } from "react";
-import AddUser from "./Pages/AddUser";
+
 
 function App() {
-  const [loginModal,setLoginVis] = useState(false);
+  const [user, setUser] = useState<{userid:string, isadmin:boolean}>();
+  const [authModal,setAuthVis] = useState<boolean>(false);
 
   return (
     <>
-      <div className="w-screen h-9 bg-pink-400 flex justify-between">
+      <div className="w-screen h-fit bg-pink-400 flex justify-between">
         <div className="flex justify-start ml-2 h-full items-center">
           <p className="px-2 font-semibold text-normal text-lg">TBA</p>
-          <div className="flex flex-row mr-4 h-full items-center">
-            <Link to="/" className="px-2 font-thin rounded-lg text-normal text-lg hover:text-pink-300  active:text-violet-900">Inicio</Link>
-            <Link to="/galleria" className="px-2 font-thin rounded-lg text-normal text-lg hover:text-pink-300  active:text-violet-900">Galleria</Link>
-            <Link to="/ordenar" className="px-2 font-thin rounded-lg text-normal text-lg hover:text-pink-300  active:text-violet-900">Ordenar</Link>
+          <div className="flex flex-row h-full items-center">
+            <Link to="/" className="px-2 font-thin rounded-lg text-normal text-xl hover:text-pink-300  active:text-violet-900">Inicio</Link>
+            <Link to="/galleria" className="px-2 font-thin rounded-lg text-normal text-xl hover:text-pink-300  active:text-violet-900">Galleria</Link>
+            <Link to="/ordenar" className="px-2 font-thin rounded-lg text-normal text-xl hover:text-pink-300  active:text-violet-900">Ordenar</Link>
           </div>
         </div>
         
-        <div className="flex  mr-4 h-full items-center">
-          <button onClick={()=>setLoginVis(!loginModal)}  className="px-2 font-thin rounded-lg text-normal text-lg hover:text-pink-300  active:text-violet-900">Login</button>
+        <div className="flex  mr-2 h-full items-center">
+          <button onClick={()=>setAuthVis(!authModal)}  className="px-2 font-thin text-normal text-xl hover:text-pink-300  active:text-violet-900">Login</button>
+
         </div>
       </div>
       <div className="bg-zinc-300 h-screen w-screen absolute overflow-scroll">
@@ -31,9 +33,8 @@ function App() {
           <Route path ="/" element={<Home/>}/>
           <Route path ="/ordenar" element={<Order/>}/>
           <Route path ="/galleria" element={<Imagenes/>}/>
-          <Route path = "/agregar-usuario" element ={<AddUser/>}/>
         </Routes>
-        {loginModal && <Login closeLogin={()=>setLoginVis(false)}/>}
+        {authModal && <Auth setUser={(id:string, isadmin:boolean)=>setUser({userid:id,isadmin:isadmin})} closeModal={()=>setAuthVis(false)}/>}
       </div>
     </>
   );

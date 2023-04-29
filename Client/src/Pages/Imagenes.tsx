@@ -3,8 +3,8 @@ import img1 from "../Images/5.jpg";
 export default function Imagenes(){
     return(
         <>
-            <h1 className="w-full text-center mt-6 text-4xl italic font-serif text-pink-500 justify-center">Galleria</h1>
-            <div className = "w-screen mt-4 mx-auto  snap-x overflow-x-auto whitespace-nowrap">
+            <h1 className="w-screen text-center mt-6 text-4xl italic font-serif text-pink-500 justify-center">Galleria</h1>
+            <div className = "w-screen mt-4  snap-x overflow-x-auto whitespace-nowrap">
                 {imageDisplay()}
             </div>
         </>
