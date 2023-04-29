@@ -30,8 +30,8 @@ function App() {
         
         <div className="flex  mr-2 h-full items-center">
           {(user.loggedin && !user.isadmin) && <LoggedInLinks/>}
-          {!user.loggedin && <button onClick={()=>setAuthVis(!authModal)}  className="px-2 font-thin text-normal text-xl hover:text-pink-300  active:text-violet-900">Login</button>}
-          {user.loggedin && <button onClick={()=>setUser(INIT_USER)}  className="px-2 font-thin text-normal text-xl hover:text-pink-300  active:text-violet-900">Logout</button>}
+          {!user.loggedin && <button onClick={()=>setAuthVis(!authModal)}  className="px-2 font-thin text-normal text-lg hover:text-pink-300  active:text-violet-900">Login</button>}
+          {user.loggedin && <button onClick={()=>setUser(INIT_USER)}  className="px-2 font-thin text-normal text-lg hover:text-pink-300  active:text-violet-900">Logout</button>}
         </div>
       </div>
       <div className="bg-zinc-300 h-screen w-screen absolute overflow-scroll">
