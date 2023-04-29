@@ -1,8 +1,10 @@
+import Login from "../Modules/Auth";
+
 export default function Home(){
     return(
         <>
             <h1 className="w-full text-center mt-6 text-5xl italic font-serif text-pink-500">Tortas By Andrea</h1>
-            <div className= "mx-auto mt-4 w-1/2 leading-12 bg-white rounded-lg">
+            <div className= "mx-auto mt-4 w-4/5 lg:w-1/2 leading-12 bg-white rounded-lg">
                 <p className="px-4 py-4">
                     ¡Bienvenidos a Tortas By Andrea! <br/>
 
@@ -20,8 +22,8 @@ export default function Home(){
             </div>
             <h1 className="w-full text-center mt-6 text-2xl italic font-serif text-pink-500">Contacto</h1>
             <p className="w-full text-center text-lg italic font-serif text-black">
-                    Dueña y Creadora : Andrea Mateus <br/>
-                    Numero: xxx-xxx-xxxx<br/>
+                    Dueña y Creadora : Andrea Mateus<br/>
+                    Numero: 647-329-1234<br/>
                     Email: tortasbyandreabucara@gmail.com<br/>
             </p>
         </>
