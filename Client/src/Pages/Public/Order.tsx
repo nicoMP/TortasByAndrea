@@ -1,4 +1,4 @@
-import OrderInput from "../Components/Order/OrderInput"
+import OrderInput from "../../Components/Order/OrderInput"
 export default function PlaceOrder(){
     return(
         <>

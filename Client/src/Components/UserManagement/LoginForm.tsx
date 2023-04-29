@@ -3,7 +3,7 @@ import { LoginAPI } from "../../Functions/UserFunctions";
 
 interface LoginForm{
     onClose:()=>void,
-    setUser:(userid:string, isadmin:boolean)=>void
+    setUser:(userid:string, isadmin:boolean, loggedin:boolean)=>void
 
   }
   export default function LoginForm({onClose, setUser}:LoginForm){
@@ -18,7 +18,13 @@ interface LoginForm{
     }
     const onSubmit = async(e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      console.log(await LoginAPI(formData));
+      let res = await LoginAPI(formData);
+      try{
+        setUser(res.userid,res.isadmin,res.loggedin);
+      }catch(e){
+        console.log(e);
+      }
+      console.log(res);
     //   onClose();
     }
     const { username, password } = formData;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import img1 from "../Images/5.jpg";
+import img1 from "../../Images/5.jpg";
 export default function Imagenes(){
     return(
         <>

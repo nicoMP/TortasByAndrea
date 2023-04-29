@@ -15,7 +15,7 @@ const public_schema = buildSchema(`
     login(
       username:String!
       password:String!
-    ) : String
+    ) : ActiveUser!
     sendEmailOrder(
         request:String!
     ): String
@@ -35,6 +35,11 @@ const public_schema = buildSchema(`
     lname:String!
     phone:Float!
     email:String!
+  }
+  type ActiveUser {
+    isadmin:Boolean
+    userid:String
+    loggedin:Boolean!
   }
   
 
@@ -62,13 +67,13 @@ const public_root = {
       const payload = {userid:userid, isadmin:isadmin} 
       const token = (signJWT(payload));
       if(await compareHash(args.password, hash)){
-        return "logged-in"
+        return {isadmin:isadmin, userid:userid, loggedin:true}
       } else {
         return "wrong-password"
       }
     }
     catch(err) {
-      return "user-not-found"
+      return {loggedin:false}
     }
   },
   registerClient: async (args)=>{

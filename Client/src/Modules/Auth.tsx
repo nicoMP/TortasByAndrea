@@ -3,11 +3,11 @@ import LoginForm from '../Components/UserManagement/LoginForm';
 import RegisterForm from '../Components/UserManagement/RegisterForm';
 interface Auth {
   closeModal:()=>void,
-  setUser:(userid:string, isadmin:boolean)=>void
+  setUser:(userid:string, isadmin:boolean,loggedin:boolean)=>void
 
 }
 export default function Auth({closeModal, setUser}:Auth) {
-  const [formState, setFormState] = useState<number>(0)
+  const [formState, setFormState] = useState<number>(0);
   const handleOnClose = (e: React.MouseEvent<HTMLUnknownElement, MouseEvent>) => {
     const target = e.target;
     if (target instanceof HTMLDivElement && target.id === "blur-auth") {

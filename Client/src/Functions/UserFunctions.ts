@@ -1,7 +1,11 @@
 import axios from "axios";
 const GRAPHQL_API = "http://localhost:4000/";
 const loginQuery = `query Login($Username:String! $Password:String!) {
-    login(username:$Username password:$Password)
+    login(username:$Username password:$Password){
+        isadmin
+        loggedin
+        userid
+    }
   }
   `; 
 const registerMutuation = `mutation($FName:String! $LName:String! $Email:String! $Phone:Float! $Password:String!) {
