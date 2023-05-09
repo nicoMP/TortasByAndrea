@@ -23,7 +23,7 @@ function App() {
           <div className="flex flex-row h-full items-center">
             <Link to="/" className="px-2 font-thin rounded-lg text-normal text-xl hover:text-pink-300  active:text-violet-900">Inicio</Link>
             <Link to="/galleria" className="px-2 font-thin rounded-lg text-normal text-xl hover:text-pink-300  active:text-violet-900">Galleria</Link>
-            {(!user.loggedin&& !user.isadmin)&&<Link to="/ordenar" className="px-2 font-thin rounded-lg text-normal text-xl hover:text-pink-300  active:text-violet-900">Ordenar</Link>}
+            <Link to="/ordenar" className="px-2 font-thin rounded-lg text-normal text-xl hover:text-pink-300  active:text-violet-900">Ordenar</Link>
             
           </div>
         </div>
@@ -34,7 +34,7 @@ function App() {
           {user.loggedin && <button onClick={()=>setUser(INIT_USER)}  className="px-2 font-thin text-normal text-lg hover:text-pink-300  active:text-violet-900">Logout</button>}
         </div>
       </div>
-      <div className="bg-zinc-300 h-screen w-screen absolute overflow-scroll">
+      <div className="bg-zinc-300 h-screen w-screen absolute overflow-auto">
         <Routes>
           <Route path ="/" element={<Home/>}/>
           <Route path ="/ordenar" element={<Order/>}/>

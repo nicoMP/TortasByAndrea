@@ -141,7 +141,9 @@ const FORM_INIT:OrderForm = {
     date: new Date(),
     info: ""
   };
-
+interface User{
+    
+}
 export default function OrderInput(){
     return(
         <div className= "bg-white mx-auto w-3/4 md:w-1/4 mt-6 rounded-lg overflow-scroll p-8">
